@@ -1,2 +1,2 @@
 # YelpCamp
-Full-Stack website for similar to yelp but for campgrounds.
+Full-Stack website similar to Yelp but for campgrounds around America.
