@@ -1,27 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout("../layouts/boilerplate") %>
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="card mb-3">
+                <img src="<%=campground.image %>" alt="nature landscapes" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <%= campground.title %>
+                    </h5>
+                    <p class="card-text">
+                        <%= campground.description %>
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item text-muted">
+                        <%= campground.location %>
+                    </li>
+                    <li class="list-group-item">$<%= campground.price %>/night</li>
+                </ul>
+                <div class="card-body">
+                    <a class="card-link btn btn-info" href="/campgrounds/<%=campground._id%>/edit">Edit</a>
+                    <form class="d-inline" action="/campgrounds/<%=campground._id%>?_method=DELETE" method="POST">
+                        <button class="card-link btn btn-danger">Delete</button>
+                    </form>
+                    <a href="/campgrounds" class="card-link">Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Show Campground</title>
-</head>
-
-<body>
-    <h1>
-        <%= campground.title %>
-    </h1>
-    <p>
-        <%= campground.location %>
-    </p>
-    <footer>
-        <a href="/campgrounds/<%=campground._id%>/edit">Edit</a>
-        <form action="/campgrounds/<%=campground._id%>?_method=DELETE" method="POST">
-            <button>Delete</button>
-        </form>
-        <a href="/campgrounds">Home</a>
-    </footer>
-</body>
-
-</html>
+    <style>
+        img {
+            width: 400px;
+            height: 400px;
+        }
+    </style>
