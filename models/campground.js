@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const Review = require("./review");
 
 const CampgroundSchema = new Schema({
   title: String,
@@ -7,6 +8,21 @@ const CampgroundSchema = new Schema({
   description: String,
   location: String,
   image: String,
+  reviews: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Review",
+    },
+  ],
 });
-
+//mongoose middleware to delete all reviews related to the deleted campground
+CampgroundSchema.post("findOneAndDelete", async (document) => {
+  if (document) {
+    await Review.deleteMany({
+      _id: {
+        $in: document.reviews,
+      },
+    });
+  }
+});
 module.exports = mongoose.model("Campground", CampgroundSchema);
