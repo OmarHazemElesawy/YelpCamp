@@ -24,10 +24,15 @@ const randGen = (arr) => arr[Math.floor(Math.random() * arr.length)];
 const seedDB = async (count) => {
   await Campground.deleteMany({});
   for (let i = 0; i < count; i++) {
+    const randPrice = Math.floor(Math.random() * 25) + 10;
     const randCity = randGen(cities);
     const newCampground = new Campground({
       location: `${randCity.city}, ${randCity.state}`,
       title: `${randGen(descriptors)}, ${randGen(places)}`,
+      image: "https://source.unsplash.com/collection/483251",
+      description:
+        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis distinctio rerum exercitationem architecto iusto eius magni maxime laboriosam ea? Minima, ipsa quidem nam perspiciatis modi tempora sapiente eos ipsam! Facilis.",
+      price: randPrice,
     });
     await newCampground.save();
   }
