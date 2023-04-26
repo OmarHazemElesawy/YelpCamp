@@ -1,14 +1,14 @@
 const express = require("express");
 const passport = require("passport");
 const User = require("../models/user");
-
+const { storeReturnTo } = require("../utils/middleware");
 const router = express.Router();
 
 router.get("/register", (_req, res) => {
   res.render("users/register");
 });
 
-router.post("/register", async (req, res) => {
+router.post("/register", storeReturnTo, async (req, res) => {
   try {
     const { email, username, password } = req.body;
     const newUser = new User({ email, username });
@@ -23,7 +23,6 @@ router.post("/register", async (req, res) => {
       //putting it outside risks causing a redirect before the login process finishes
       req.flash("success", "Welcome to YelpCamp");
       const redirectUrl = req.session.returnTo || "/campgrounds";
-      delete req.session.returnTo;
       res.redirect(redirectUrl);
     });
   } catch (e) {
@@ -42,10 +41,11 @@ router.post(
     failureFlash: true,
     failureRedirect: "/login",
   }),
+  storeReturnTo,
   (req, res) => {
     req.flash("success", "Welcome Back to YelpCamp");
     const redirectUrl = req.session.returnTo || "/campgrounds";
-    delete req.session.returnTo;
+    console.log(redirectUrl);
     res.redirect(redirectUrl);
   }
 );
