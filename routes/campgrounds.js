@@ -2,6 +2,7 @@ const express = require("express");
 
 const ExpressError = require("../utils/ExpressError");
 const wrapAsync = require("../utils/wrapAsync");
+const isLoggedIn = require("../utils/isLoggedIn");
 const Campground = require("../models/campground");
 const { campgroundSchema } = require("../schemas");
 
@@ -30,11 +31,12 @@ router.get(
 );
 
 //New Routes
-router.get("/new", (_req, res) => {
+router.get("/new", isLoggedIn, (req, res) => {
   res.render("campgrounds/new");
 });
 router.post(
   "/",
+  isLoggedIn,
   validateCampground,
   wrapAsync(async (req, res) => {
     const { campground } = req.body;
@@ -62,6 +64,7 @@ router.get(
 //Edit Routes
 router.get(
   "/:id/edit",
+  isLoggedIn,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     const campground = await Campground.findById(id);
@@ -74,6 +77,7 @@ router.get(
 );
 router.put(
   "/:id",
+  isLoggedIn,
   validateCampground,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
@@ -88,6 +92,7 @@ router.put(
 //Delete Route
 router.delete(
   "/:id",
+  isLoggedIn,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     await Campground.findByIdAndDelete(id);
