@@ -2,7 +2,7 @@ const express = require("express");
 
 const ExpressError = require("../utils/ExpressError");
 const wrapAsync = require("../utils/wrapAsync");
-const isLoggedIn = require("../utils/isLoggedIn");
+const { isLoggedIn } = require("../utils/middleware");
 const Campground = require("../models/campground");
 const { campgroundSchema } = require("../schemas");
 
@@ -41,6 +41,7 @@ router.post(
   wrapAsync(async (req, res) => {
     const { campground } = req.body;
     const newCampground = new Campground(campground);
+    newCampground.author = req.user._id;
     await newCampground.save();
     req.flash("success", "Successfully Created A New Campground");
     res.redirect(`/campgrounds/${newCampground._id}`);
@@ -52,7 +53,15 @@ router.get(
   "/:id",
   wrapAsync(async (req, res) => {
     const { id } = req.params;
-    const campground = await Campground.findById(id).populate("reviews");
+    //populates the authors for reviews and authors of camogrounds
+    const campground = await Campground.findById(id)
+      .populate({
+        path: "reviews",
+        populate: {
+          path: "author",
+        },
+      })
+      .populate("author");
     if (!campground) {
       req.flash("error", "Cannot Find Requested Campground");
       return res.redirect("/campgrounds");
@@ -72,6 +81,13 @@ router.get(
       req.flash("error", "Cannot Find Requested Campground");
       return res.redirect("/campgrounds");
     }
+    if (!campground.author.equals(req.user._id)) {
+      req.flash(
+        "error",
+        "you do not have the permission to edit this campground!"
+      );
+      return res.redirect(`/campgrounds/${campground._id}`);
+    }
     res.render("campgrounds/edit", { campground });
   })
 );
@@ -81,11 +97,20 @@ router.put(
   validateCampground,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
-    const campground = await Campground.findByIdAndUpdate(id, {
-      ...req.body.campground,
-    });
-    req.flash("success", "Successfully Updated Campground");
-    res.redirect(`/campgrounds/${campground._id}`);
+    const campground = await Campground.findById(id);
+    if (!campground.author.equals(req.user._id)) {
+      req.flash(
+        "error",
+        "you do not have the permission to edit this campground!"
+      );
+      return res.redirect(`/campgrounds/${campground._id}`);
+    } else {
+      const camp = await Campground.findByIdAndUpdate(id, {
+        ...req.body.campground,
+      });
+      req.flash("success", "Successfully Updated Campground");
+      res.redirect(`/campgrounds/${camp._id}`);
+    }
   })
 );
 
@@ -95,9 +120,18 @@ router.delete(
   isLoggedIn,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
-    await Campground.findByIdAndDelete(id);
-    req.flash("success", "Successfully Deleted Campground");
-    res.redirect(`/campgrounds`);
+    const campground = await Campground.findById(id);
+    if (!campground.author.equals(req.user._id)) {
+      req.flash(
+        "error",
+        "you do not have the permission to edit this campground!"
+      );
+      return res.redirect(`/campgrounds/${campground._id}`);
+    } else {
+      await Campground.findByIdAndDelete(id);
+      req.flash("success", "Successfully Deleted Campground");
+      res.redirect(`/campgrounds`);
+    }
   })
 );
 
