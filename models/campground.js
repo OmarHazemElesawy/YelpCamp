@@ -14,6 +14,10 @@ const CampgroundSchema = new Schema({
       ref: "Review",
     },
   ],
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 //mongoose middleware to delete all reviews related to the deleted campground
 CampgroundSchema.post("findOneAndDelete", async (document) => {
