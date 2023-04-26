@@ -33,6 +33,7 @@ const seedDB = async (count) => {
       description:
         "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis distinctio rerum exercitationem architecto iusto eius magni maxime laboriosam ea? Minima, ipsa quidem nam perspiciatis modi tempora sapiente eos ipsam! Facilis.",
       price: randPrice,
+      author: "64490eab667efd704de8eb5d",
     });
     await newCampground.save();
   }
