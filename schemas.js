@@ -14,7 +14,7 @@ module.exports.campgroundSchema = campgroundSchema;
 
 const reviewSchema = JOI.object({
   review: JOI.object({
-    rating: JOI.number().min(1).max(5).required(),
+    rating: JOI.number().min(0).max(5).required(),
     body: JOI.string().required(),
   }).required(),
 });
