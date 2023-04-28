@@ -15,7 +15,12 @@ module.exports.createCampground = async (req, res) => {
   const { campground } = req.body;
   const newCampground = new Campground(campground);
   newCampground.author = req.user._id;
+  newCampground.images = req.files.map((f) => ({
+    url: f.path,
+    filename: f.filename,
+  }));
   await newCampground.save();
+  console.log(newCampground);
   req.flash("success", "Successfully Created A New Campground");
   res.redirect(`/campgrounds/${newCampground._id}`);
 };
@@ -60,6 +65,7 @@ module.exports.renderEditForm = async (req, res) => {
 module.exports.updateCampground = async (req, res) => {
   const { id } = req.params;
   const campground = await Campground.findById(id);
+  console.log(req.body);
   if (!campground.author.equals(req.user._id)) {
     req.flash(
       "error",
@@ -70,6 +76,19 @@ module.exports.updateCampground = async (req, res) => {
     const camp = await Campground.findByIdAndUpdate(id, {
       ...req.body.campground,
     });
+    //add new images uploaded
+    const newImages = req.files.map((f) => ({
+      url: f.path,
+      filename: f.filename,
+    }));
+    camp.images.push(...newImages);
+    await camp.save();
+    //Pulls element from an array
+    if (req.body.deletedImages) {
+      await camp.updateOne({
+        $pull: { images: { filename: { $in: req.body.deletedImages } } },
+      });
+    }
     req.flash("success", "Successfully Updated Campground");
     res.redirect(`/campgrounds/${camp._id}`);
   }
