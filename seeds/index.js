@@ -6,6 +6,12 @@ const { places, descriptors } = require("./seedHelpers");
 const Campground = require("../models/campground");
 const Review = require("../models/review");
 
+// //maps seeding
+// const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+// const mapboxToken =
+//   "pk.eyJ1IjoiZ2VvLW1hcHMtY291cnNlIiwiYSI6ImNsaDBjZTNxMjBzMjczZ3FjbzUyajh0bXcifQ.FI1oZN-SrZIC11ZKR0Bk2w";
+// const geocoder = mbxGeocoding({ accessToken: mapboxToken });
+
 //mongodb connection
 mongoose.set("strictQuery", true);
 mongoose
@@ -27,10 +33,13 @@ const seedDB = async (count) => {
   await Review.deleteMany({});
   for (let i = 0; i < count; i++) {
     const randPrice = Math.floor(Math.random() * 25) + 10;
-    const randCity = randGen(cities);
+    const randLocation = randGen(cities);
+    const location = `${randLocation.city}, ${randLocation.state}`;
+    const geometry = { type: 'Point', coordinates: [randLocation.longitude, randLocation.latitude] };
     const newCampground = new Campground({
-      author: "64490eab667efd704de8eb5d",
-      location: `${randCity.city}, ${randCity.state}`,
+      author: "644c03d8c53712220f026e09",
+      geometry,
+      location,
       title: `${randGen(descriptors)}, ${randGen(places)}`,
       description:
         "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis distinctio rerum exercitationem architecto iusto eius magni maxime laboriosam ea? Minima, ipsa quidem nam perspiciatis modi tempora sapiente eos ipsam! Facilis.",
@@ -54,7 +63,17 @@ const seedDB = async (count) => {
   }
 };
 
-//50 entries
-seedDB(50).then(() => {
+// const genGeoCode = async (location) => {
+//   const geoData = await geocoder
+//     .forwardGeocode({
+//       query: location,
+//       limit: 1,
+//     })
+//     .send();
+//   return geoData.body.features[0].geometry;
+// };
+
+//200 entries
+seedDB(200).then(() => {
   mongoose.connection.close();
 });

@@ -6,7 +6,7 @@ const campgroundSchema = JOI.object({
     location: JOI.string().required(),
     description: JOI.string().required(),
     price: JOI.number().min(0).required(),
-    // images: JOI.string().required(),
+    //images: JOI.array().required(),
   }).required(),
   //added deleted images array to joi
   deletedImages: JOI.array(),
