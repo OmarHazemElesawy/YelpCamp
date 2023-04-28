@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 //Packages imports
 const express = require("express");
 const mongoose = require("mongoose");
@@ -37,7 +41,6 @@ app.use(session(sessionConfig));
 
 //Flash
 app.use(flash());
-
 
 //Passport setup
 app.use(passport.initialize());
