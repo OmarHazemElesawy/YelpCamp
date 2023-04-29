@@ -6,10 +6,12 @@
                 <p>
                     <%=message%>
                 </p>
-                <hr>
-                <p class="mb-2">
-                    <%=stack%>
-                </p>
+                <% if(process.env.NODE_ENV !=="production" ){ %>
+                    <hr>
+                    <p class="mb-2">
+                        <%=stack%>
+                    </p>
+                    <% }%>
             </div>
         </div>
     </div>
