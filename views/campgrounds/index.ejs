@@ -1,6 +1,6 @@
 <% layout("../layouts/boilerplate") %>
     <div id="map" style="width: 100%; height: 500px"></div>
-    <h1">All Campgrounds</h1>
+    <h1>All Campgrounds</h1>
         <% for(let campground of campgrounds) { %>
             <div class="card mb-3">
                 <div class="row">
@@ -10,7 +10,7 @@
                                 <% if(!campground.images.length) { %>
                                     <div class="carousel-item active">
                                         <img crossorigin="anonymous"
-                                            src="https://res.cloudinary.com/dgglpas6e/image/upload/v1682602873/YelpCamp/lwglck0dfohphxnew1pq.jpg"
+                                            src="https://res.cloudinary.com/dgglpas6e/image/upload/v1682760987/YelpCamp/c1deolidm25ijjxtvf0f.jpg"
                                             class="d-block w-100" alt="nature landscapes">
                                     </div>
                                     <% } else { %>
@@ -19,8 +19,8 @@
                                                 <img crossorigin="anonymous" src="<%=campground.images[i].url%>"
                                                     class="d-block w-100" alt="nature landscapes">
                                             </div>
-                                        <% } %>
-                                    <% } %>
+                                            <% } %>
+                                                <% } %>
                             </div>
                             <% if(campground.images.length> 1){ %>
                                 <button class="carousel-control-prev" type="button"
@@ -59,6 +59,6 @@
             <% } %>
                 <script>
                     const token = '<%-process.env.MAP_KEY%>';
-                    const campgrounds = { features: JSON.parse('<%-JSON.stringify(campgrounds)%>') };
+                    const campgrounds = { features: JSON.parse(`<%-JSON.stringify(campgrounds)%>`) };
                 </script>
                 <script src="/JS/cluster.js"></script>
