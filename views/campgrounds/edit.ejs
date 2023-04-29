@@ -53,15 +53,14 @@
                 <div class="mb-3">
                     <% for(let i=0 ; i < campground.images.length; i++) {%>
                         <!-- <% const thumbnail = campground.images[i].url.replace("/upload" , "/upload/w_100" ) %> -->
-                        <div class="new">                        <img crossorigin="anonymous" src="<%=campground.images[i].url%>" class="img-thumbnail" alt="nature landscapes">
-                        </div>
+                        <img crossorigin="anonymous" src="<%=campground.images[i].url%>" class="img-thumbnail" alt="nature landscapes" style="width: 200px; height: 100px;">
                         <div class="form-check-inline">
                             <input type="checkbox" name="deletedImages[]" value="<%=campground.images[i].filename%>"
                                 id="image-<%i%>">
                         </div>
                         <label for="image-<%i%>">Delete me</label>
-                </div>
                 <% } %>
+                    </div>
                 <div class="mb-3">
                     <button class="btn btn-primary">Update Campground</button>
                 </div>
