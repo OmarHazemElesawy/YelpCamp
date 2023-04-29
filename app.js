@@ -1,7 +1,4 @@
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
-
+require("dotenv").config();
 //Packages imports
 const express = require("express");
 const mongoose = require("mongoose");
@@ -9,6 +6,7 @@ const methodOverride = require("method-override");
 const path = require("path");
 const ejsMate = require("ejs-mate");
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 const passport = require("passport");
 const passportLocal = require("passport-local");
@@ -79,9 +77,20 @@ app.use(
   })
 );
 
+//session store db
+const dbUrl = process.env.DB_URL;
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  touchAfter: 24 * 60 * 60,
+  crypto: {
+      secret: process.env.DB_STORE_SECRET
+  }
+});
+
 //Session and cookies
 const sessionConfig = {
   name: "yelpCampSession",
+  store,
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
@@ -89,7 +98,7 @@ const sessionConfig = {
     expires: Date.now() + 1000 * 60 * 60 * 24,
     maxAge: 1000 * 60 * 60 * 24,
     HttpOnly: true,
-    // secure: true,
+    //secure: true,
   },
 };
 app.use(session(sessionConfig));
@@ -118,7 +127,7 @@ app.use(methodOverride("_method"));
 //Mongodb connection
 mongoose.set("strictQuery", true);
 mongoose
-  .connect("mongodb://127.0.0.1:27017/yelpCamp", {
+  .connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
