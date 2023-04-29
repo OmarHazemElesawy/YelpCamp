@@ -26,17 +26,6 @@ router.post(
   wrapAsync(campgroundsController.createCampground)
 );
 
-//single file
-// router.post("/", upload.single("image"), (req, res) => {
-//   console.log(req.body, req.file);
-//   res.send("it worked");
-// });
-// //multiple files
-// router.post("/", upload.array("image"), (req, res) => {
-//   console.log(req.body, req.files);
-//   res.send("it worked");
-// })
-
 //Show Route
 router.get("/:id", wrapAsync(campgroundsController.showCampground));
 
