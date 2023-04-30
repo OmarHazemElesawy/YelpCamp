@@ -6,7 +6,7 @@ const methodOverride = require("method-override");
 const path = require("path");
 const ejsMate = require("ejs-mate");
 const session = require("express-session");
-const MongoStore = require('connect-mongo');
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const passportLocal = require("passport-local");
@@ -58,22 +58,22 @@ const connectSrcUrls = [
 const fontSrcUrls = [];
 app.use(
   helmet.contentSecurityPolicy({
-      directives: {
-          defaultSrc: [],
-          connectSrc: ["'self'", ...connectSrcUrls],
-          scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
-          styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
-          workerSrc: ["'self'", "blob:"],
-          objectSrc: [],
-          imgSrc: [
-              "'self'",
-              "blob:",
-              "data:",
-              `https://res.cloudinary.com/${process.env.COLUDINARY_CLOUD_NAME}/`,
-              "https://images.unsplash.com/",
-          ],
-          fontSrc: ["'self'", ...fontSrcUrls],
-      },
+    directives: {
+      defaultSrc: [],
+      connectSrc: ["'self'", ...connectSrcUrls],
+      scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+      styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+      workerSrc: ["'self'", "blob:"],
+      objectSrc: [],
+      imgSrc: [
+        "'self'",
+        "blob:",
+        "data:",
+        `https://res.cloudinary.com/${process.env.COLUDINARY_CLOUD_NAME}/`,
+        "https://images.unsplash.com/",
+      ],
+      fontSrc: ["'self'", ...fontSrcUrls],
+    },
   })
 );
 
@@ -83,8 +83,8 @@ const store = MongoStore.create({
   mongoUrl: dbUrl,
   touchAfter: 24 * 60 * 60,
   crypto: {
-      secret: process.env.DB_STORE_SECRET
-  }
+    secret: process.env.DB_STORE_SECRET,
+  },
 });
 
 //Session and cookies
@@ -95,10 +95,9 @@ const sessionConfig = {
   resave: false,
   saveUninitialized: true,
   cookie: {
-    expires: Date.now() + 1000 * 60 * 60 * 24,
-    maxAge: 1000 * 60 * 60 * 24,
+    expires: Date.now() + 1000 * 60 * 60 * 12,
+    maxAge: 1000 * 60 * 60 * 12,
     HttpOnly: true,
-    //secure: true,
   },
 };
 app.use(session(sessionConfig));
