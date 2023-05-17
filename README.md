@@ -60,5 +60,5 @@ I designed the front-end of the application using Bootstrap to create a responsi
 Contributions, issues, and feature requests are welcome!
 Give a ⭐️ if you like this project!
 
-##Acknowledgements:
-[course](https://www.udemy.com/course/the-web-developer-bootcamp)
+## Acknowledgements:
+[Colt Steel's course](https://www.udemy.com/course/the-web-developer-bootcamp)
