@@ -6,6 +6,8 @@ const cities = require("./seeds");
 const { places, descriptors } = require("./seedHelpers");
 const Campground = require("../models/campground");
 const Review = require("../models/review");
+const imagesArr = require("./ImgUrls");
+const descs = require("./descArr");
 
 //mongodb connection
 const dbUrl = process.env.DB_URL;
@@ -22,44 +24,38 @@ mongoose
     console.log("OH NO MONGO CONNECTION ERROR!!!!");
     console.log(err);
   });
+
 // seeding functions
 const randGen = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
 const seedDB = async (count) => {
   await Campground.deleteMany({});
   await Review.deleteMany({});
   for (let i = 0; i < count; i++) {
     const randPrice = Math.floor(Math.random() * 25) + 10;
+    const randImg1 = Math.floor(Math.random() * 20);
+    const randImg2 = Math.abs(randImg1 - 19);
+    const randDesc = Math.floor(Math.random() * 40);
     const randLocation = randGen(cities);
     const location = `${randLocation.city}, ${randLocation.state}`;
-    const geometry = { type: 'Point', coordinates: [randLocation.longitude, randLocation.latitude] };
+    const geometry = {
+      type: "Point",
+      coordinates: [randLocation.longitude, randLocation.latitude],
+    };
     const newCampground = new Campground({
       author: process.env.ADMIN_ID,
       geometry,
       location,
       title: `${randGen(descriptors)}, ${randGen(places)}`,
-      description:
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis distinctio rerum exercitationem architecto iusto eius magni maxime laboriosam ea? Minima, ipsa quidem nam perspiciatis modi tempora sapiente eos ipsam! Facilis. Cupiditate ex debitis, voluptas nobis rem veritatis.",
+      description: descs[randDesc],
       price: randPrice,
-      images: [
-        {
-          url: "https://res.cloudinary.com/dgglpas6e/image/upload/v1682760987/YelpCamp/mzqkkps9ii1t0zs3q8xt.jpg",
-          filename: "YelpCamp/mzqkkps9ii1t0zs3q8xt",
-        },
-        {
-          url: "https://res.cloudinary.com/dgglpas6e/image/upload/v1682760987/YelpCamp/zynftiygq4awonhugr0r.jpg",
-          filename: "YelpCamp/zynftiygq4awonhugr0r",
-        },
-        {
-          url: "https://res.cloudinary.com/dgglpas6e/image/upload/v1682760987/YelpCamp/pu3htksr386kfntvpg6l.jpg",
-          filename: "YelpCamp/pu3htksr386kfntvpg6l",
-        },
-      ],
+      images: [imagesArr[randImg1], imagesArr[randImg2]],
     });
     await newCampground.save();
   }
 };
 
-//200 entries
-seedDB(200).then(() => {
+//50 entries
+seedDB(50).then(() => {
   mongoose.connection.close();
 });
