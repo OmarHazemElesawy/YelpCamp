@@ -11,7 +11,7 @@
                                     <div class="carousel-item active">
                                         <img crossorigin="anonymous"
                                             src="https://res.cloudinary.com/dgglpas6e/image/upload/v1682760987/YelpCamp/c1deolidm25ijjxtvf0f.jpg"
-                                            class="d-block w-100" alt="nature landscapes">
+                                            class="d-block w-100" alt="nature landscapes" style="width: 400px; height: 350px; object-fit: cover;">
                                     </div>
                                     <% } else { %>
                                         <% for(let i=0 ; i < campground.images.length; i++) {%>
@@ -20,7 +20,7 @@
                                                     class="d-block w-100" alt="nature landscapes">
                                             </div>
                                             <% } %>
-                                                <% } %>
+                                                <% } %> 
                             </div>
                             <% if(campground.images.length> 1){ %>
                                 <button class="carousel-control-prev" type="button"
