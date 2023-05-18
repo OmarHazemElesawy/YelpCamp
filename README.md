@@ -56,6 +56,19 @@ I designed the front-end of the application using Bootstrap to create a responsi
   - Run the server using `npm start`.
   - The server will run on port 3000 by default.
   - All the endpoints are available on `http://localhost:3000`
+## Screenshots:
+![Landing Page](assets/Landing.png)
+![Campgrounds Page 1](assets/campgrounds1.png)
+![Campgrounds Page 2](assets/campgrounds2.png)
+![Campgrounds Page 3](assets/campgrounds3.png)
+![Login Page](assets/login.png)
+![Register Page](assets/register.png)
+![Logged In User Show Page](assets/logged in user.png)
+![Guest User Show Page](assets/guestshow.png)
+![New Campground Page](assets/newCampground.png)
+![Update Campground Page](assets/updateCampground.png)
+![User added Own Campground Page](assets/own campground.png)
+
 ## 🤝 Support
 Contributions, issues, and feature requests are welcome!
 Give a ⭐️ if you like this project!
