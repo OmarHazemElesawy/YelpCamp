@@ -71,7 +71,7 @@ I designed the front-end of the application using Bootstrap to create a responsi
 6. Register Page:
 ![Register Page](assets/register.png)
 7. Guest User Show Page:
-![Guest User Show Page](assets/guestShow.png)
+![Guest User Show Page](assets/guestshow.png)
 8. Logged In User Show Page:
 ![Logged In User Show Page](assets/loggedInUser.png)
 9. User added Campground Page:
