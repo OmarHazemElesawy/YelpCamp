@@ -60,11 +60,11 @@ I designed the front-end of the application using Bootstrap to create a responsi
 ## Screenshots:
 1. Landing Page:
 ![Landing Page](assets/Landing.png)
-2.Campgrounds Page:
+2.Campgrounds Page 1:
 ![Campgrounds Page 1](assets/campgrounds1.png)
-3. Campgrounds Page:
+3. Campgrounds Page 2:
 ![Campgrounds Page 2](assets/campgrounds2.png)
-4. Campgrounds Page:
+4. Campgrounds Page 3:
 ![Campgrounds Page 3](assets/campgrounds3.png)
 5. Login Page:
 ![Login Page](assets/login.png)
