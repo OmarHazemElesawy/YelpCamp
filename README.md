@@ -1,12 +1,9 @@
-# YelpCamp
+# [Yelpcamp](https://yelpcampgrounds.onrender.com)
 
 ## Introduction:
 YelpCamp is a web application built as part of Colt Steele's Udemy course "The Web Developer Bootcamp". 
 YelpCamp allows users to create and view campgrounds, leave reviews, and more. This project was built using cutting-edge technologies such as Node.js, Express, and MongoDB.In this project, I implemented user authentication and authorization using Passport.js, allowing users to sign up, log in, and perform actions such as creating and editing campgrounds and reviews. I also used MongoDB to store data such as campgrounds, reviews, and user information.
 I designed the front-end of the application using Bootstrap to create a responsive and visually appealing user interface. I also used EJS to dynamically render HTML pages based on data from the server. Overall, YelpCamp is a full-stack web application that showcases my skills in web development. From designing the front-end to implementing back-end functionality and working with databases, this project demonstrates my ability to build a complete web application from start to finish. I hope you enjoy exploring it!
-
-##Try It Out!
-# [Yelpcamp Page](https://yelpcampgrounds.onrender.com)
 
 ## Built with:
 - JavaScript: Frontend & Backend
